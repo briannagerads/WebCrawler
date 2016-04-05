@@ -32,10 +32,6 @@ public class WikiCrawler {
 	 */
 	private String fileName;
 	/**
-	 * the file that the CS 311 instructors want the information written to
-	 */
-	//private String wikiText = "WikiCS.txt";
-	/**
 	 * the base url for wikipedia
 	 */
 	private final static String BASE_URL = "https://en.wikipedia.org";
@@ -86,7 +82,6 @@ public class WikiCrawler {
 		numPagesCrawled = 0;
 		htmlPage = "";
 		toWrite = "";
-		//wikiLoc = 0;
 	}
 	
 	/**
@@ -206,7 +201,7 @@ public class WikiCrawler {
 			//courtesy rule: wait 3s every 100 pages
 			if (numPagesCrawled%100 == 0 && numPagesCrawled != 0) {
 				TimeUnit.SECONDS.sleep(delay);
-				System.out.println("delay: " + numDelay + ", pagesCrawled: " + numPagesCrawled);
+				//System.out.println("delay: " + numDelay + ", pagesCrawled: " + numPagesCrawled);
 			}
 			fetchPage(currentPage);
 			
