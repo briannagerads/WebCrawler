@@ -3,8 +3,8 @@ package hw5;
 public class WikiCSCrawler {
 	
 	public static void main(String[] args) {
-		String param = "/wiki/Computer_Science";
-		String param1 = "/wiki/Complexity_theory";
+		//String param = "/wiki/Computer_Science";
+		String param = "/wiki/Complexity_theory";
 		//int max = 1000;
 		int max = 100;
 		//String file = "WikiCS.txt";

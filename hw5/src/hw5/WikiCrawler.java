@@ -63,6 +63,10 @@ public class WikiCrawler {
 	 * the string that holds the graph information until it is written to the file
 	 */
 	private String toWrite;
+	/**
+	 * holds the location of the index of the /wiki/ to add to determine where to parse the document string
+	 */
+	private static int wikiLoc;
 	
 	/**
 	 * COnstructor for the wiki crawler
@@ -82,6 +86,7 @@ public class WikiCrawler {
 		numPagesCrawled = 0;
 		htmlPage = "";
 		toWrite = "";
+		//wikiLoc = 0;
 	}
 	
 	/**
@@ -99,15 +104,14 @@ public class WikiCrawler {
 		int index = 0;
 		doc = doc.substring(loc);
 		String add = getWiki(doc);
-		
 		//add if it is a valid /wiki/
-		while(!add.equals("-1")) {
-			if (!(add.contains("#") || add.contains(":")) && !result.contains(add)) {
+		while(!add.equals("none")) {
+			if (!(add.contains("#") || add.contains(":")) && !result.contains(add) && !add.equals("-1")) {
 				result.add(add);
 			}
 			
 			// get updated string without previous wiki
-			index = doc.indexOf(add);
+			index = doc.indexOf("/wiki/");
 			doc = doc.substring(index+add.length()-1);
 			add = getWiki(doc);
 		}
@@ -136,8 +140,6 @@ public class WikiCrawler {
 		
 		//write to fileName
 		writeToFile(fileName, toWrite);
-		//write to WikiCS.txt
-		//writeToFile(wikiText, toWrite);
 	}
 	
 	
@@ -180,7 +182,7 @@ public class WikiCrawler {
 	private boolean BFS(String seed) throws IOException, InterruptedException {
 		//initialize queue and list
 		Queue<String> q = new LinkedList<String>();
-		List<String> visited = new ArrayList<String>();
+		List<String> visited = new LinkedList<String>();
 		int delay = 3; //3 second delay
 		
 		//add seed to queue and list
@@ -227,6 +229,7 @@ public class WikiCrawler {
 				}
 			}
 		}
+		System.out.println(numEdges);
 		return false;
 	}
 	
@@ -261,6 +264,7 @@ public class WikiCrawler {
 		
 		// get wiki location
 		start = doc.indexOf("/wiki/");
+		if (start == -1) return "none";
 		if (doc.charAt(start-1) != '"') return "-1";
 		
 		//parse the wiki string apart from the given string
@@ -269,7 +273,7 @@ public class WikiCrawler {
 		String result = temp.substring(0, end);
 		if (start != -1 && end != -1) return result;
 		
-		return "-1";
+		return "none";
 	}
 	
 	/**
